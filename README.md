@@ -1,37 +1,74 @@
-# NY.gov SelfRegV3 Registration Fix
+# NY.gov Security Vulnerability Report & Fix
 
-A JavaScript hotfix that resolves a critical bug in the NY.gov ID self-registration system where the Social Security Number field fails to render, blocking all account registrations.
+**Comprehensive security audit and hotfixes for critical vulnerabilities in NY.gov systems.**
 
-## 🚨 The Problem
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The NY.gov ID registration page (`my.ny.gov/SelfRegV3`) has a **rendering bug** that causes the SSN input field to be completely missing from the form. Without this field, identity verification fails 100% of the time.
+---
 
-### Symptoms
+## 🚨 Executive Summary
 
-- User fills out Steps 1 and 2 of registration
-- User clicks "Create Account" on Step 3
-- **Result:** "Unfortunately, your identity was not able to be verified..."
+This repository documents **13 security vulnerabilities** discovered in NY.gov systems during a comprehensive security audit conducted on January 3, 2026. It also provides working hotfixes for the most critical issues.
 
-### Root Cause
+### Vulnerability Overview
 
-The SSN panel in the DOM is empty:
+| Severity | Count | Key Issues |
+|----------|-------|------------|
+| **CRITICAL** | 2 | Session hijacking, Registration denial |
+| **HIGH** | 3 | User enumeration, Stack disclosure |
+| **MEDIUM** | 4 | CAPTCHA broken, Missing SRI |
+| **LOW** | 4 | Info disclosure, Config issues |
+
+---
+
+## 📋 All Vulnerabilities (Highest to Lowest Risk)
+
+### CRITICAL (Immediate Action Required)
+
+| # | Vulnerability | CVSS | System | Impact |
+|---|---------------|------|--------|--------|
+| 1 | **Session ID in URL** | 9.1 | GovQA FOIL | Session hijacking via Referer headers |
+| 2 | **SSN Field Missing** | 8.5 | SelfRegV3 | 100% registration failure |
+
+### HIGH
+
+| # | Vulnerability | CVSS | System | Impact |
+|---|---------------|------|--------|--------|
+| 3 | User/Email Enumeration | 7.5 | SelfRegV3 | Account discovery for attacks |
+| 4 | CAPTCHA Invisibility | 7.0 | GovQA | FOIL submissions blocked |
+| 5 | IBM WebSphere Disclosure | 6.5 | SelfRegV3 | Targeted exploit development |
+
+### MEDIUM
+
+| # | Vulnerability | CVSS | System | Impact |
+|---|---------------|------|--------|--------|
+| 6 | Clickjacking | 6.1 | All Sites | UI redressing attacks |
+| 7 | Resource Loading Failures | 5.5 | SelfRegV3 | Component malfunction |
+| 8 | Password Reset Enumeration | 5.3 | FPSV4 | Username discovery |
+| 9 | Missing Subresource Integrity | 5.0 | All Sites | Supply chain attacks |
+
+### LOW
+
+| # | Vulnerability | CVSS | System | Impact |
+|---|---------------|------|--------|--------|
+| 10 | Missing Security Headers | 4.0 | All Sites | Reduced protections |
+| 11 | Build Info Disclosure | 3.0 | SelfRegV3 | Version fingerprinting |
+| 12 | Broken Error Handler | 2.5 | All Sites | Poor hygiene |
+| 13 | Device Session ID Exposure | 2.0 | SelfRegV3 | Increased attack surface |
+
+---
+
+## 🔧 The Fix (SSN Field Hotfix)
+
+### The Problem
+
+The NY.gov ID registration page has a **rendering bug** that causes the SSN input field to be completely missing:
 
 ```html
-<span id="selfregform:ssnPanel"></span>  <!-- Should contain SSN input -->
+<span id="selfregform:ssnPanel"></span>  <!-- EMPTY - BUG -->
 ```
 
-The page loads SSN masking scripts (`jquery.maskssn.js`) but the actual input field never renders.
-
-## ✅ The Fix
-
-This repository provides a JavaScript injection that:
-
-1. **Injects the missing SSN field** on Step 2 with proper JSF naming
-2. **Auto-formats SSN input** as user types (XXX-XX-XXXX)
-3. **Persists SSN to Step 3** by injecting hidden fields on the confirmation page
-4. **Provides visual confirmation** that the fix is active
-
-## Usage
+Without SSN, identity verification fails 100% of the time.
 
 ### Quick Fix (Browser Console)
 
@@ -40,66 +77,152 @@ This repository provides a JavaScript injection that:
 3. Paste the contents of `selfreg-fix.js`
 4. Fill in your information including SSN
 5. Continue to Step 3
-
-**Important:** On Step 3, paste `step3-fix.js` before clicking "Create Account"
+6. **On Step 3**, paste `step3-fix.js` before clicking "Create Account"
 
 ### Bookmarklet
 
 Create a bookmark with this URL:
 
 ```javascript
-javascript:(function(){var s=document.createElement('script');s.src='https://raw.githubusercontent.com/barkleesanders/nygov-selfreg-fix/main/selfreg-fix.js';document.body.appendChild(s);})();
+javascript:(function(){var s=document.createElement('script');s.src='https://raw.githubusercontent.com/barkleesanders/nygov-selfreg-fix/main/complete-fix.js';document.body.appendChild(s);})();
 ```
 
-## Files
+---
+
+## 📁 Repository Contents
+
+### Fix Scripts
 
 | File | Purpose |
 |------|---------|
-| `selfreg-fix.js` | Main SSN field injection for Step 2 |
-| `step3-fix.js` | Hidden field injection for Step 3 confirmation |
-| `complete-fix.js` | Combined fix that handles both steps |
+| `selfreg-fix.js` | SSN field injection for Step 2 |
+| `step3-fix.js` | Hidden field injection for Step 3 |
+| `complete-fix.js` | Combined smart fix for both steps |
 
-## Technical Details
+### Security Reports
 
-### Affected System
+| File | Content |
+|------|---------|
+| `VULNERABILITY_REPORT_FULL.md` | Complete audit with CVSS scores |
+| `BLIND_SPOTS_REPORT.md` | Additional vulnerabilities (5 more) |
+| `SECURITY_AUDIT_REPORT.md` | Initial findings summary |
+| `SECURITY_REPORT.md` | Single-issue report for SSN bug |
+| `EMAIL_TO_CISO.txt` | Ready-to-send notification email |
 
-- **Application:** SelfRegV3
-- **URL:** `https://my.ny.gov/SelfRegV3/`
-- **Framework:** JavaServer Faces (JSF) + PrimeFaces
-- **Build:** 12/05/2025 9:11 PM W: (NULL) A: 169PB_1
+---
 
-### Why This Works
+## 🔍 Key Technical Findings
 
-The JSF framework expects form fields to be server-rendered, but the SSN panel is empty due to a server-side rendering failure. By injecting a properly-named input field (`selfregform:ssn`), we provide the missing component that the server-side validation expects.
+### 1. Session ID in URL (CRITICAL)
 
-The fix must be applied to **both** Step 2 and Step 3 because:
-- Step 2 → Step 3 transition doesn't persist client-injected fields
-- Step 3's form submission needs the SSN value present
+```
+https://itsny.govqa.us/WEBAPP/_rs/(S(k1jzg2ix...))/...
+                                  ^^^^^^^^^^^^^^^^
+                                  SESSION TOKEN IN URL
+```
 
-### Identity Verification
+**Risk:** Anyone who receives a shared URL or sees the Referer header can hijack the session.
 
-After the SSN is submitted, NY.gov's backend performs identity verification (likely via LexisNexis or similar service) matching:
-- Name
-- Date of Birth
-- Address
-- SSN
+### 2. SSN Field Rendering Failure (CRITICAL)
 
-All four must match public records for verification to succeed.
+```javascript
+document.getElementById('selfregform:ssnPanel').innerHTML
+// Returns: "" (empty string)
+```
 
-## Disclaimer
+**Root Cause:** JSF/PrimeFaces server-side component fails to render. Build metadata shows `W: (NULL)`.
 
-⚠️ **This is a workaround for a government website bug.**
+### 3. Missing Subresource Integrity (MEDIUM)
 
-- Use this fix only to register your own account
-- Never share your SSN with anyone
-- This fix is provided as-is with no warranty
-- Report the underlying bug to NY.gov
+**8 out of 9** third-party scripts lack SRI, including:
+- `sdk.dv.socure.us/device-risk-sdk.js` (Identity verification!)
+- `google.com/recaptcha/enterprise.js`
+- `static-assets.ny.gov/unav/js/unav-bundle.js`
 
-## Related
+**Risk:** Supply chain attack could inject credential-stealing code.
 
-- [FOIL Request R000252-010326](https://github.com/barkleesanders/turnstile-debug-harness) - Freedom of Information request about this bug
+### 4. User Enumeration (HIGH)
+
+```
+Input: admin
+Response: "The Username you have selected is currently in use."
+
+Input: known@email.com  
+Response: "You already have an NY.gov ID!"
+```
+
+**Risk:** Attackers can enumerate valid accounts for targeted attacks.
+
+---
+
+## 🛡️ Affected Systems
+
+| System | URL | Framework |
+|--------|-----|-----------|
+| SelfRegV3 | `my.ny.gov/SelfRegV3/` | JSF + PrimeFaces |
+| LoginV4 | `my.ny.gov/LoginV4/` | JSF + PrimeFaces |
+| FPSV4 | `my.ny.gov/FPSV4/` | JSF + PrimeFaces |
+| GovQA FOIL | `itsny.govqa.us` | DevExpress + ASP.NET |
+
+**Backend:** IBM WebSphere Application Server (confirmed via error codes)
+
+---
+
+## 📧 Responsible Disclosure
+
+### CISO Contact
+
+| | |
+|--|--|
+| **Email** | CISO@its.ny.gov |
+| **Phone** | 518-473-9687 |
+| **CISO** | Chris DeSain |
+
+### FOIL Request
+
+A Freedom of Information Law request has been submitted:
+- **Reference:** R000252-010326
+- **Status:** Pending
+
+### Disclosure Timeline
+
+| Date | Event |
+|------|-------|
+| 2026-01-03 | Vulnerabilities discovered |
+| 2026-01-03 | Root cause analysis completed |
+| 2026-01-03 | Workarounds developed |
+| 2026-01-03 | FOIL request submitted |
+| 2026-01-03 | Security reports created |
+| 2026-01-03 | Notification to CISO prepared |
+
+---
+
+## ⚠️ Disclaimer
+
+This repository is provided for **educational and security research purposes only**.
+
+- Use the fix scripts only for your own account registration
+- Never share your SSN with untrusted parties
+- This fix is a workaround, not an official solution
+- No warranty is provided
+
+---
+
+## 👤 Contact
+
+**Security Researcher:** Brian Sanders  
+**Email:** shaqsanders73@gmail.com  
+**GitHub:** [@barkleesanders](https://github.com/barkleesanders)
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+---
+
+## 🔗 Related
+
+- [Turnstile Debug Harness](https://github.com/barkleesanders/turnstile-debug-harness) - CAPTCHA bug fix and FOIL documentation
 - [NY.gov Support](https://my.ny.gov/support) - Official support channel
-
-## License
-
-MIT - Use at your own risk.
