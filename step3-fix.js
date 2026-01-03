@@ -6,7 +6,7 @@
  * 
  * Usage: Paste in browser console on the confirmation page BEFORE clicking "Create Account"
  * 
- * GitHub: https://github.com/barkleesanders/nygov-selfreg-fix
+ * GitHub: https://[REPOSITORY]/nygov-selfreg-fix
  */
 
 (function () {

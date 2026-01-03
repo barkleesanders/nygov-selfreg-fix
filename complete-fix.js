@@ -9,7 +9,7 @@
  * 2. Fill in your info and click Continue
  * 3. When Step 3 loads, paste again (or it may auto-prompt)
  * 
- * GitHub: https://github.com/barkleesanders/nygov-selfreg-fix
+ * GitHub: https://[REPOSITORY]/nygov-selfreg-fix
  */
 
 (function () {

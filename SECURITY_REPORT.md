@@ -1,7 +1,7 @@
 # Security Vulnerability Report: NY.gov SelfRegV3 SSN Field Rendering Failure
 
 **Date:** January 3, 2026  
-**Reported By:** Brian Sanders  
+**Reported By:** Anonymous Researcher  
 **Severity:** HIGH - Complete service denial for all users  
 **Affected System:** NY.gov ID Self Registration (SelfRegV3)
 
@@ -70,7 +70,7 @@ document.getElementById('selfregform:ssnPanel').innerHTML
 
 A client-side JavaScript injection can create the missing SSN field, allowing registration to complete successfully. This workaround has been documented at:
 
-- **GitHub:** https://github.com/barkleesanders/nygov-selfreg-fix
+- **GitHub:** [REPOSITORY]/nygov-selfreg-fix
 - **FOIL Reference:** R000252-010326 (submitted January 3, 2026)
 
 ---
@@ -91,7 +91,7 @@ During investigation, the following related issues were observed:
 ### GovQA FOIL Portal (itsny.govqa.us)
 - **Issue:** BotDetect CAPTCHA renders with 0x0 dimensions due to CSS layout collapse
 - **Impact:** Users cannot complete CAPTCHA, blocking FOIL submissions
-- **Reference:** https://github.com/barkleesanders/turnstile-debug-harness
+- **Reference:** [REPOSITORY]/turnstile-debug-harness
 
 ### SelfRegV3 reCAPTCHA Implementation
 - **Issue:** `setToken()` function not called on Step 3 "Create Account" button
@@ -101,9 +101,9 @@ During investigation, the following related issues were observed:
 
 ## Contact Information
 
-**Reporter:** Brian Sanders  
-**Email:** shaqsanders73@gmail.com  
-**GitHub:** https://github.com/barkleesanders  
+**Reporter:** Anonymous Researcher  
+**Email:** [REDACTED]  
+**GitHub:** [REPOSITORY]  
 
 I am available to provide additional technical details or assist with remediation efforts.
 

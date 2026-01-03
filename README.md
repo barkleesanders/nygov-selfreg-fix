@@ -208,14 +208,6 @@ This repository is provided for **educational and security research purposes onl
 
 ---
 
-## 👤 Contact
-
-**Security Researcher:** Brian Sanders  
-**Email:** shaqsanders73@gmail.com  
-**GitHub:** [@barkleesanders](https://github.com/barkleesanders)
-
----
-
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) for details.
@@ -224,5 +216,5 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 🔗 Related
 
-- [Turnstile Debug Harness](https://github.com/barkleesanders/turnstile-debug-harness) - CAPTCHA bug fix and FOIL documentation
 - [NY.gov Support](https://my.ny.gov/support) - Official support channel
+

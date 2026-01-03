@@ -239,6 +239,6 @@ Global crawl prevention is in place, but this:
 
 ## Contact
 
-**Security Researcher:** Brian Sanders  
-**Email:** shaqsanders73@gmail.com  
-**GitHub:** https://github.com/barkleesanders/nygov-selfreg-fix
+**Security Researcher:** Anonymous Researcher  
+**Email:** [REDACTED]  
+**GitHub:** [REPOSITORY]/nygov-selfreg-fix

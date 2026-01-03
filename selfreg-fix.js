@@ -5,7 +5,7 @@
  * 
  * Usage: Paste in browser console on https://my.ny.gov/SelfRegV3/selfregsteptwo.xhtml
  * 
- * GitHub: https://github.com/barkleesanders/nygov-selfreg-fix
+ * GitHub: https://[REPOSITORY]/nygov-selfreg-fix
  */
 
 (function () {

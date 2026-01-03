@@ -1,7 +1,7 @@
 # NY.gov Security Audit Report
 
 **Date:** January 3, 2026  
-**Auditor:** Brian Sanders  
+**Auditor:** Anonymous Researcher  
 **Scope:** my.ny.gov, SelfRegV3, itsny.govqa.us
 
 ---
@@ -107,7 +107,7 @@ BotDetect CAPTCHA images render with 0x0 pixel dimensions due to CSS layout coll
 - Account registration blocked on FOIL portal
 
 ### Fix Available
-CSS injection to force CAPTCHA dimensions: [nygov-hotfix.js](https://github.com/barkleesanders/turnstile-debug-harness)
+CSS injection to force CAPTCHA dimensions: [nygov-hotfix.js]([REPOSITORY]/turnstile-debug-harness)
 
 ---
 
@@ -213,10 +213,10 @@ Users cannot navigate the FOIL portal, effectively denying access to public reco
 
 ## Contact
 
-**Reporter:** Brian Sanders  
-**Email:** shaqsanders73@gmail.com  
-**GitHub:** https://github.com/barkleesanders
+**Reporter:** Anonymous Researcher  
+**Email:** [REDACTED]  
+**GitHub:** [REPOSITORY]
 
 **Related:**
 - FOIL Request: R000252-010326
-- Fix Repository: https://github.com/barkleesanders/nygov-selfreg-fix
+- Fix Repository: [REPOSITORY]/nygov-selfreg-fix

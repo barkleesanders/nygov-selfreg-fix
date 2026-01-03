@@ -33,12 +33,12 @@ The page loads jquery.maskssn.js expecting to find .ssnId elements, but none exi
 ## Proof of Concept
 
 I have documented a client-side workaround that injects the missing field and allows registration to complete:
-- GitHub: https://github.com/barkleesanders/nygov-selfreg-fix
+- GitHub: [REPOSITORY]/nygov-selfreg-fix
 
 ## Related Issue
 
 I also discovered that the ITS FOIL portal (itsny.govqa.us) has a similar rendering bug where the BotDetect CAPTCHA displays with 0x0 dimensions:
-- GitHub: https://github.com/barkleesanders/turnstile-debug-harness
+- GitHub: [REPOSITORY]/turnstile-debug-harness
 - FOIL Reference: R000252-010326
 
 ## Offer of Assistance
@@ -47,11 +47,11 @@ I am available to provide additional technical details, logs, or screen recordin
 
 ## Contact
 
-Brian Sanders
-Email: shaqsanders73@gmail.com
-GitHub: https://github.com/barkleesanders
+Anonymous Researcher
+Email: [REDACTED]
+GitHub: [REPOSITORY]
 
 Thank you for your attention to this matter. Given the impact on public access to state services, I hope this can be addressed promptly.
 
 Respectfully,
-Brian Sanders
+Anonymous Researcher
