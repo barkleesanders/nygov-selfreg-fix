@@ -1,0 +1,57 @@
+To: CISO@its.ny.gov
+Subject: Security Vulnerability Report: SelfRegV3 SSN Field Rendering Failure - HIGH Severity
+
+Dear Chief Information Security Officer DeSain,
+
+I am writing to report a critical security vulnerability in the NY.gov ID Self Registration system (SelfRegV3) that is currently blocking all new user registrations.
+
+## Summary
+
+The SSN input field on the registration form (selfregsteptwo.xhtml) fails to render, causing 100% of identity verification attempts to fail. Users receive a generic "identity could not be verified" error with no indication of the actual technical failure.
+
+## Affected System
+
+- URL: https://my.ny.gov/SelfRegV3/selfregsteptwo.xhtml
+- Build: 12/05/2025 9:11 PM W: (NULL) A: 169PB_1
+- Framework: JSF/PrimeFaces
+
+## Technical Details
+
+The DOM contains an empty SSN panel:
+```html
+<span id="selfregform:ssnPanel"></span>  <!-- Should contain SSN input -->
+```
+
+The page loads jquery.maskssn.js expecting to find .ssnId elements, but none exist because the server-side component fails to render.
+
+## Impact
+
+- All new NY.gov ID registrations are blocked
+- Users cannot access services requiring NY.gov authentication
+- Healthcare enrollment, DMV services, and other critical state services are inaccessible to new users
+
+## Proof of Concept
+
+I have documented a client-side workaround that injects the missing field and allows registration to complete:
+- GitHub: https://github.com/barkleesanders/nygov-selfreg-fix
+
+## Related Issue
+
+I also discovered that the ITS FOIL portal (itsny.govqa.us) has a similar rendering bug where the BotDetect CAPTCHA displays with 0x0 dimensions:
+- GitHub: https://github.com/barkleesanders/turnstile-debug-harness
+- FOIL Reference: R000252-010326
+
+## Offer of Assistance
+
+I am available to provide additional technical details, logs, or screen recordings to assist your team in resolving this issue. I am also prepared to offer pro bono assistance with remediation if helpful.
+
+## Contact
+
+Brian Sanders
+Email: shaqsanders73@gmail.com
+GitHub: https://github.com/barkleesanders
+
+Thank you for your attention to this matter. Given the impact on public access to state services, I hope this can be addressed promptly.
+
+Respectfully,
+Brian Sanders
